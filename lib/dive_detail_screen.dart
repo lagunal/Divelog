@@ -16,7 +16,7 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _boatController = TextEditingController();
-  String _diveType = 'Scuba';
+  List<String> _diveType = ['Scuba'];
   int _currentPage = 0;
 
   @override
@@ -87,12 +87,13 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
               return Container(
                 width: 8.0,
                 height: 8.0,
-                margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                margin: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _currentPage == index
                       ? Colors.black
-                      : Colors.grey.withOpacity(0.5),
+                      : Colors.grey.withAlpha(128),
                 ),
               );
             }),
@@ -119,20 +120,30 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
               style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 20),
-            _buildTextField(label: 'Operadora de buceo', controller: _diveOperatorController, hint: 'Operadora de buceo'),
+            _buildTextField(
+                label: 'Operadora de buceo',
+                controller: _diveOperatorController,
+                hint: 'Operadora de buceo'),
             const SizedBox(height: 20),
             _buildTextField(label: 'Fecha', controller: _dateController),
             const SizedBox(height: 20),
-            _buildTextField(label: 'Lugar del buceo', controller: _locationController, hint: '¿Dónde buceaste?'),
+            _buildTextField(
+                label: 'Lugar del buceo',
+                controller: _locationController,
+                hint: '¿Dónde buceaste?'),
             const SizedBox(height: 20),
-            _buildTextField(label: 'Buque / Instalacion', controller: _boatController),
+            _buildTextField(
+                label: 'Buque / Instalacion', controller: _boatController),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({required String label, required TextEditingController controller, String? hint}) {
+  Widget _buildTextField(
+      {required String label,
+      required TextEditingController controller,
+      String? hint}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -159,7 +170,12 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
   }
 
   Widget _buildDiveTypePage() {
-    final diveTypes = ['Scuba', 'Assist. Superficie', 'Altura Geografica', 'Saturacion'];
+    final diveTypes = [
+      'Scuba',
+      'Assist. Superficie',
+      'Altura Geografica',
+      'Saturacion'
+    ];
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -193,18 +209,22 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
   }
 
   Widget _buildDiveTypeOption({required String title, required String value}) {
-    final bool isSelected = _diveType == value;
+    final bool isSelected = _diveType.contains(value);
     return GestureDetector(
       onTap: () {
         setState(() {
-          _diveType = value;
+          if (isSelected) {
+            _diveType.remove(value);
+          } else {
+            _diveType.add(value);
+          }
         });
       },
       child: Container(
         width: 100,
         height: 100,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.grey[200],
+          color: isSelected ? Colors.blue.withAlpha(25) : Colors.grey[200],
           borderRadius: BorderRadius.circular(8.0),
           border: Border.all(
             color: isSelected ? Colors.blue : Colors.transparent,
