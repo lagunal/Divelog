@@ -119,7 +119,7 @@ class _DivesScreenState extends State<DivesScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DiveDetailScreen(
-                      dive: Dive(date: DateTime.now(), location: '', diveType: ['Scuba']),
+                      dive: Dive(date: DateTime.now(), location: '', diveOperator: '', boat: '', diveType: []),
                     ),
                   ),
                 );

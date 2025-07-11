@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'models/dive.dart';
 
 class DiveDetailScreen extends StatefulWidget {
@@ -22,11 +23,21 @@ class _DiveDetailScreenState extends State<DiveDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _diveOperatorController.text = 'Operadora XYZ';
-    _dateController.text = '2024-07-15';
-    _locationController.text = 'Cozumel, Mexico';
-    _boatController.text = 'Barco ABC';
-    _diveType = widget.dive.diveType;
+    _diveOperatorController.text = widget.dive.diveOperator;
+    _dateController.text = DateFormat.yMMMd().format(widget.dive.date);
+    _locationController.text = widget.dive.location;
+    _boatController.text = widget.dive.boat;
+
+    // Defensive check for diveType
+    if (widget.dive.diveType is List<String>) {
+      _diveType = widget.dive.diveType;
+    } else if (widget.dive.diveType is String) {
+      // If it's a String, convert it to a List containing that string
+      _diveType = [widget.dive.diveType as String];
+    } else {
+      // Fallback to an empty list if type is unexpected
+      _diveType = [];
+    }
 
     _pageController.addListener(() {
       setState(() {

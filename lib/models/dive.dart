@@ -5,11 +5,11 @@ class Dive {
   final String boat;
   final List<String> diveType;
 
-  Dive({
-    required this.location,
-    required this.date,
-    this.diveOperator = 'N/A',
-    this.boat = 'N/A',
-    this.diveType = const ['Scuba'],
-  });
+  Dive(
+      {required this.location,
+      required this.date,
+      this.diveOperator = 'N/A',
+      this.boat = 'N/A',
+      List<String>? diveType})
+      : diveType = diveType ?? ['Scuba'];
 }
